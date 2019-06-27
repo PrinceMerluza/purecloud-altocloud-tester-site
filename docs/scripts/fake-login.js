@@ -11,7 +11,7 @@
 
 function login() {
     console.log("You have logged in");
-            ac('identify', "default", {
-                favoritePet: "dog"
-            });
+    ac('identify', "default", {
+        jobTitle: "dog"
+    });
 }
