@@ -11,7 +11,5 @@
 
 function login() {
     console.log("You have logged in");
-    ac('identify', "default", {
-        jobTitle: "dog"
-    });
+
 }
