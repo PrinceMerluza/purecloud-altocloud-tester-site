@@ -1,3 +1,7 @@
-h1 {
-    color: red;
+.items-container {
+    padding-top: 50px;
+}
+
+.price-text {
+    color: #198a44;
 }

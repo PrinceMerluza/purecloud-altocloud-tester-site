@@ -1,0 +1,8 @@
+EVENTS
+--------------
+Abandon Shopping Cart 
+Search Query
+- No Results
+Login
+Register
+ProActive Chatting
