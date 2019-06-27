@@ -15,11 +15,15 @@
       ac('init', '03671e89-0883-48b0-8284-cd5260c38745', { region: 'use1' });
       ac('pageview');
       ac('identify', "default", {
-        displayName: "dog"
-    }, (e) => {
-      console.log(e);
-      console.log("que?");
-    });
+        displayName: "dog",
+        givenName: "dog"
+      }, (e) => {
+        console.log(e);
+        console.log("que?");
+      });
+      ac('record', "loginIGuess", {
+        test: "ysep"
+      })
   </script>
   <script src="scripts/fake-login.js"></script>
   <title>Buy Buy Shop</title>
