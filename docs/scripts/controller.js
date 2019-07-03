@@ -1,21 +1,41 @@
 // Page Navigation 
-function goToHome(){
-    console.log('Go Home');
-    ac('pageview');
-}
+function goToPage(page){
+    console.log(`Go to: ${ page }`);
+    document.getElementById('page-status').textContent = page;
 
-function goToAbout(){
-    console.log('Go to About Page');
-    ac('pageview', {
-        location: 'about.html',
-        title: 'About Us'
-    });
-}
-
-function goToShop(){
-    console.log('Go to About Page');
-    ac('pageview', {
-        location: 'shop?cat=popular',
-        title: 'Popular Categories'
-    });
+    switch(page){
+        case 'home':
+            ac('pageview');
+            break;
+        case 'about':
+            ac('pageview', {
+                location: 'about',
+                title: 'About Us'
+            });
+            break;
+        case 'contactUs':
+            ac('pageview', {
+                location: 'contact-us',
+                title: 'Contact Information'
+            });
+            break;
+        case 'shop':
+            ac('pageview', {
+                location: 'shop',
+                title: 'Shop'
+            });
+            break;
+        case 'faqs':
+            ac('pageview', {
+                location: 'faqs',
+                title: 'FAQs'
+            });
+            break;
+        case 'locations':
+            ac('pageview', {
+                location: 'locations',
+                title: 'Find Us'
+            });
+            break;
+    }
 }

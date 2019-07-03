@@ -19,31 +19,39 @@
   <title>PureCloud AltoCloud Quick Tester</title>
 </head>
 <body>
-  <section class="section">
+  <section class="section" id="page-navigation">
     <div class="container">
       <h1 class="title">Simulate Page Visit</h1>
       <h2 class="subtitle">
-        <strong>Status: </strong> <span id="page-status">Currently at home</span>
+        <strong>Status: </strong> <span id="page-status">Home</span> page
       </h2>
   
       <div class="columns">
         <div class="column">
-          <button class="button is-large is-fullwidth" onclick="goToHome()">
+          <button 
+              class="button is-large is-fullwidth" 
+              onclick="goToPage('home')">
             Home
           </button>
         </div>
         <div class="column">
-          <button class="button is-large is-fullwidth" onclick="goToAbout()">
+          <button 
+              class="button is-large is-fullwidth" 
+              onclick="goToPage('about')">
             About
           </button>
         </div>
         <div class="column">
-          <button class="button is-large is-fullwidth">
+          <button 
+              class="button is-large is-fullwidth" 
+              onclick="goToPage('contactUs')">
             Contact Us
           </button>
         </div>
         <div class="column">
-          <button class="button is-large is-fullwidth" onclick="goToShop()">
+          <button 
+              class="button is-large is-fullwidth" 
+              onclick="goToPage('shop')">
             Shop
           </button>
         </div>
@@ -53,17 +61,67 @@
           </button>
         </div>
         <div class="column">
-          <button class="button is-large is-fullwidth">
+          <button 
+              class="button is-large is-fullwidth" 
+              onclick="goToPage('faqs')">
             FAQs
           </button>
         </div>
         <div class="column">
-          <button class="button is-large is-fullwidth">
+          <button 
+              class="button is-large is-fullwidth" 
+              onclick="goToPage('locations')">
             Store Location
           </button>
         </div>
       </div>
     </div>
   </section>
+  <section class="section" id="account-related">
+      <div class="container">
+        <h1 class="title">Acount Related</h1>
+        <h2 class="subtitle">
+          <strong>Status: </strong> <span id="page-status">Currently at home</span>
+        </h2>
+    
+        <div class="columns">
+          <div class="column">
+            <button class="button is-large is-fullwidth" onclick="goToHome()">
+              Home
+            </button>
+          </div>
+          <div class="column">
+            <button class="button is-large is-fullwidth" onclick="goToAbout()">
+              About
+            </button>
+          </div>
+          <div class="column">
+            <button class="button is-large is-fullwidth" onclick="goToContactUs()">
+              Contact Us
+            </button>
+          </div>
+          <div class="column">
+            <button class="button is-large is-fullwidth" onclick="goToShop()">
+              Shop
+            </button>
+          </div>
+          <div class="column">
+            <button class="button is-large is-fullwidth">
+              Cart
+            </button>
+          </div>
+          <div class="column">
+            <button class="button is-large is-fullwidth" onclick="goToFAQs()">
+              FAQs
+            </button>
+          </div>
+          <div class="column">
+            <button class="button is-large is-fullwidth" onclick="goToLocations()">
+              Store Location
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
 </body>
 </html>
