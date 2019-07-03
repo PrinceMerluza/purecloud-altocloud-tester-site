@@ -11,3 +11,11 @@ function goToAbout(){
         title: 'About Us'
     });
 }
+
+function goToShop(){
+    console.log('Go to About Page');
+    ac('pageview', {
+        location: 'shop?cat=popular',
+        title: 'Popular Categories'
+    });
+}
