@@ -1,3 +1,4 @@
+
 // Page Navigation 
 function goToPage(page){
     console.log(`Go to: ${ page }`);
@@ -39,3 +40,49 @@ function goToPage(page){
             break;
     }
 }
+
+function logInPress(){
+    // Get values from form
+    const userID = document.getElementById('inputUserID').value;
+    const fullName = document.getElementById('inputFullName').value;
+
+    // Save to storage
+    localStorage.setItem('userID', userID);
+    localStorage.setItem('fullName', fullName);
+
+    logIn(userID, fullName);
+}
+
+function logIn(userID, fullName){
+    const accountStatusElem = document.getElementById('account-status');
+
+    // View
+    accountStatusElem.textContent = `${userID} - ${fullName}`;
+
+    // AltoCloud
+    ac('identify', userID, { givenName: fullName })
+
+    console.log(`Logged in as ${fullName}`);
+}
+
+function logOut(){
+    const accountStatusElem = document.getElementById('account-status');
+
+    // Remove from localStorage
+    localStorage.removeItem('userID');
+    localStorage.removeItem('fullName');
+
+    // View
+    accountStatusElem.textContent = 'No User';
+
+    // AltoCloud
+    ac('identify', null);
+
+    console.log('Logged Out');
+}
+
+
+// Login automatically on page load
+if(localStorage.getItem('userID') && localStorage.getItem('fullName')){
+    logIn(localStorage.getItem('userID'), localStorage.getItem('fullName'));
+}  

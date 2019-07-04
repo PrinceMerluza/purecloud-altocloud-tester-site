@@ -14,8 +14,6 @@
     ac('init', '03671e89-0883-48b0-8284-cd5260c38745', { region: 'use1' });
     ac('pageview');
   </script>
-  <script src="scripts/controller.js"></script>
-
   <title>PureCloud AltoCloud Quick Tester</title>
 </head>
 <body>
@@ -81,47 +79,56 @@
       <div class="container">
         <h1 class="title">Acount Related</h1>
         <h2 class="subtitle">
-          <strong>Status: </strong> <span id="page-status">Currently at home</span>
+          <strong>Status: </strong> <span id="account-status">No user</span>
         </h2>
-    
+        
+        <!-- Credentials Form -->
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">UserId</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control">
+                <input id="inputUserID" class="input" type="text" placeholder="">
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Full Name</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control">
+                <input id="inputFullName" class="input" type="text" placeholder="">
+              </p>
+            </div>
+          </div>
+        </div>
+
         <div class="columns">
           <div class="column">
-            <button class="button is-large is-fullwidth" onclick="goToHome()">
-              Home
+            <button class="button is-large is-fullwidth" onclick="logInPress()">
+              Log In
             </button>
           </div>
+          <div class="column">
+              <button class="button is-large is-fullwidth is-danger" onclick="logOut()">
+                Log Out
+              </button>
+            </div>
           <div class="column">
             <button class="button is-large is-fullwidth" onclick="goToAbout()">
-              About
-            </button>
-          </div>
-          <div class="column">
-            <button class="button is-large is-fullwidth" onclick="goToContactUs()">
-              Contact Us
-            </button>
-          </div>
-          <div class="column">
-            <button class="button is-large is-fullwidth" onclick="goToShop()">
-              Shop
-            </button>
-          </div>
-          <div class="column">
-            <button class="button is-large is-fullwidth">
-              Cart
-            </button>
-          </div>
-          <div class="column">
-            <button class="button is-large is-fullwidth" onclick="goToFAQs()">
-              FAQs
-            </button>
-          </div>
-          <div class="column">
-            <button class="button is-large is-fullwidth" onclick="goToLocations()">
-              Store Location
+              Sign Up
             </button>
           </div>
         </div>
       </div>
     </section>
+
+
+    <script src="scripts/controller.js"></script>
 </body>
 </html>
