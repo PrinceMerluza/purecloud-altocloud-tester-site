@@ -1,3 +1,15 @@
+// Globals... yea I know
+let isLoggedIn = false;
+
+// Login automatically on page load
+if(localStorage.getItem('userID') && 
+    localStorage.getItem('firstName') && 
+    localStorage.getItem('lastName')){
+
+    logIn(localStorage.getItem('userID'), 
+          localStorage.getItem('firstName'),
+          localStorage.getItem('lastName'));
+}  
 
 // Page Navigation 
 function goToPage(page){
@@ -44,24 +56,32 @@ function goToPage(page){
 function logInPress(){
     // Get values from form
     const userID = document.getElementById('inputUserID').value;
-    const fullName = document.getElementById('inputFullName').value;
+    const firstName = document.getElementById('inputFirstName').value;
+    const lastName = document.getElementById('inputLastName').value;
 
     // Save to storage
     localStorage.setItem('userID', userID);
-    localStorage.setItem('fullName', fullName);
+    localStorage.setItem('firstName', firstName);
+    localStorage.setItem('lastName', lastName);
 
-    logIn(userID, fullName);
+    logIn(userID, firstName, lastName);
 }
 
-function logIn(userID, fullName){
+function logIn(userID, firstName, lastName){
     const accountStatusElem = document.getElementById('account-status');
+    let fullName = firstName + ' ' + lastName;
 
     // View
     accountStatusElem.textContent = `${userID} - ${fullName}`;
 
     // AltoCloud
-    ac('identify', userID, { givenName: fullName })
+    ac('identify', userID, { 
+        givenName: firstName,
+        familyName: lastName,
+        displayName: fullName
+    });
 
+    isLoggedIn = true;
     console.log(`Logged in as ${fullName}`);
 }
 
@@ -70,7 +90,8 @@ function logOut(){
 
     // Remove from localStorage
     localStorage.removeItem('userID');
-    localStorage.removeItem('fullName');
+    localStorage.removeItem('firstName');
+    localStorage.removeItem('lastName');
 
     // View
     accountStatusElem.textContent = 'No User';
@@ -78,11 +99,21 @@ function logOut(){
     // AltoCloud
     ac('identify', null);
 
+    isLoggedIn = false;
     console.log('Logged Out');
 }
 
-
-// Login automatically on page load
-if(localStorage.getItem('userID') && localStorage.getItem('fullName')){
-    logIn(localStorage.getItem('userID'), localStorage.getItem('fullName'));
-}  
+// AltoCloud Advanced Configuration
+function getAdvancedConfig(){
+    if(isLoggedIn){
+        return {
+            form: {
+                firstname: localStorage.getItem('firstName'),
+                lastname: localStorage.getItem('lastName'),
+                autoSubmit: true
+            }
+        };
+    }
+    
+    return {};
+}

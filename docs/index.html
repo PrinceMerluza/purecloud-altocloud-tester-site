@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
-
+  <link rel="stylesheet" href="styles/style.css">
+  
+  <!-- AC PureCLoud Snippet-->
   <script>
     (function(a,t,c,l,o,u,d){a['_genesysJourneySdk']=o;a[o]=a[o]||function(){
     (a[o].q=a[o].q||[]).push(arguments)},a[o].l=1*new Date();u=t.createElement(c),
@@ -14,6 +16,60 @@
     ac('init', '03671e89-0883-48b0-8284-cd5260c38745', { region: 'use1' });
     ac('pageview');
   </script>
+
+  <script src="https://apps.mypurecloud.com/widgets/9.0/cxbus.min.js" 
+    onload="javascript:CXBus.configure({
+      debug:false,
+      pluginsPath: 'https://apps.mypurecloud.com/widgets/9.0/plugins/'
+    }); 
+    CXBus.loadPlugin('widgets-core');">
+  </script>
+
+  <!-- AC Configuration-->
+  <script>
+    window._genesys = {
+    widgets: {
+      webchat: {
+        transport: {
+          type: 'purecloud-v2-sockets',
+          dataURL: 'https://api.mypurecloud.com',
+          deploymentKey : '384b201d-5a83-478f-b461-43b2cd4163dd',
+          orgGuid : '03671e89-0883-48b0-8284-cd5260c38745',
+          interactionData: {
+            routing: {
+              targetType: 'QUEUE',
+              targetAddress: 'Prince Chat',
+              priority: 2
+            }
+          }
+        },
+        userData: {
+          addressStreet: '64472 Brown Street',
+          addressCity: 'Lindgrenmouth',
+          addressPostalCode: '50163-2735',
+          addressState: 'FL',
+          phoneNumber: '1-916-892-2045 x293',
+          phoneType: 'Cell',
+          customerId: '59606',
+        }
+      }
+    }
+  };
+  </script>
+
+  <!-- AC Plugin -->
+  <script>
+    const customPlugin = CXBus.registerPlugin('Custom');
+
+    customPlugin.subscribe('WebChatService.started', function (e) {
+      console.log('Chat started', e);
+    });
+
+    customPlugin.subscribe('WebChatService.ended', function (e) {
+      console.log('Chat ended', e);
+    });
+  </script>
+
   <title>PureCloud AltoCloud Quick Tester</title>
 </head>
 <body>
@@ -76,59 +132,85 @@
     </div>
   </section>
   <section class="section" id="account-related">
-      <div class="container">
-        <h1 class="title">Acount Related</h1>
-        <h2 class="subtitle">
-          <strong>Status: </strong> <span id="account-status">No user</span>
-        </h2>
-        
-        <!-- Credentials Form -->
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">UserId</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <p class="control">
-                <input id="inputUserID" class="input" type="text" placeholder="">
-              </p>
-            </div>
-          </div>
+    <div class="container">
+      <h1 class="title">Acount Related</h1>
+      <h2 class="subtitle">
+        <strong>Status: </strong> <span id="account-status">No user</span>
+      </h2>
+      
+      <!-- Credentials Form -->
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">UserId</label>
         </div>
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">Full Name</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <p class="control">
-                <input id="inputFullName" class="input" type="text" placeholder="">
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="columns">
-          <div class="column">
-            <button class="button is-large is-fullwidth" onclick="logInPress()">
-              Log In
-            </button>
-          </div>
-          <div class="column">
-              <button class="button is-large is-fullwidth is-danger" onclick="logOut()">
-                Log Out
-              </button>
-            </div>
-          <div class="column">
-            <button class="button is-large is-fullwidth" onclick="goToAbout()">
-              Sign Up
-            </button>
+        <div class="field-body">
+          <div class="field">
+            <p class="control">
+              <input id="inputUserID" class="input" type="text" placeholder="">
+            </p>
           </div>
         </div>
       </div>
-    </section>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">First Name</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <p class="control">
+              <input id="inputFirstName" class="input" type="text" placeholder="Thanos">
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Last Name</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <p class="control">
+              <input id="inputLastName" class="input" type="text" placeholder="McSnappy">
+            </p>
+          </div>
+        </div>
+      </div>
 
+      <div class="columns">
+        <div class="column">
+          <button class="button is-large is-fullwidth" onclick="logInPress()">
+            Log In
+          </button>
+        </div>
+        <div class="column">
+            <button class="button is-large is-fullwidth is-danger" onclick="logOut()">
+              Log Out
+            </button>
+          </div>
+        <div class="column">
+          <button class="button is-large is-fullwidth" onclick="">
+            Sign Up
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section" id="chat-related">
+    <div class="container">
+      <h1 class="title">Chat</h1>
+      <h2 class="subtitle">
+        <span>Manually open a chat</span>
+      </h2>
+      <div class="container">
+        <button 
+            class="button is-large is-fullwidth"
+            onclick="customPlugin.command('WebChat.open', getAdvancedConfig());">
+          Chat!
+        </button>
+      </div>
+    </div>
+  </section>
 
-    <script src="scripts/controller.js"></script>
+  <script src="scripts/controller.js"></script>
 </body>
 </html>
