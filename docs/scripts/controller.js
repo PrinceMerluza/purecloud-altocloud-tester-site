@@ -78,7 +78,8 @@ function logIn(userID, firstName, lastName){
     ac('identify', userID, { 
         givenName: firstName,
         familyName: lastName,
-        displayName: fullName
+        displayName: fullName,
+        randomAttribute: 'yep' // TODO:
     });
 
     isLoggedIn = true;
@@ -116,4 +117,9 @@ function getAdvancedConfig(){
     }
     
     return {};
+}
+
+function search(){
+    let keyword = document.getElementById('inputSearch').value;
+    window.location.href = `index.html?q=${keyword}`;
 }
