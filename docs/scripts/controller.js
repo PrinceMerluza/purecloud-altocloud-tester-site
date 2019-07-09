@@ -24,6 +24,8 @@ function goToPage(page){
             ac('pageview', {
                 location: 'about',
                 title: 'About Us'
+            }, {
+                "TestingAttr": 100
             });
             break;
         case 'contactUs':
