@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer');
-const names = require('names/names.js');
+const names = require('./names/names.js');
 
 const navigations =  [
     'btn-goto-home', 

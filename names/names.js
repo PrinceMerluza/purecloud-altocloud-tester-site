@@ -1,5 +1,5 @@
 const fs = require('fs');
-const path = require('path'),   
+const path = require('path');   
 
 const g_firstNames = fs.readFileSync(path.join(__dirname, 'g_firstNames'), 'utf8');
 const b_firstNames = fs.readFileSync(path.join(__dirname, 'b_firstNames'), 'utf8');
