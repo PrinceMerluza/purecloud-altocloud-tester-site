@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
-const names = require('./names/names.js');
+const names = require('./utility/names.js');
+const search = require('./utility/search.js');
 
 const navigations =  [
     'btn-goto-home', 
@@ -9,9 +10,9 @@ const navigations =  [
     'btn-goto-faqs', 
     'btn-goto-locations',
 ]
-const maxNavigation = 20;
-const minNavigation = 5;
-const maxDudes = 5;
+const maxActions = 20;
+const minActions = 5;
+const maxDudes = 10;
 
 function timeout(ms, maxMs){
     if(!maxMs) 
@@ -21,7 +22,29 @@ function timeout(ms, maxMs){
             setTimeout(resolve, ms + Math.floor(Math.random() * maxMs)));
 }
 
-async function navigate() {
+async function login(page){
+    let firstName = names.getFirstName();
+    let lastName = names.getLastName();
+    let userId = `${Math.floor(Math.random() * 1000)}`;
+
+    console.log(userId + ' ' + firstName + ' ' + lastName);
+
+    await page.waitFor('input[id=inputUserID]');
+    await page.$eval('input[id=inputUserID]', 
+                (el, value) => el.value = value, userId);    
+
+    await page.waitFor('input[id=inputFirstName]');
+    await page.$eval('input[id=inputFirstName]', 
+                (el, value) => el.value = value, firstName);
+
+    await page.waitFor('input[id=inputLastName]');
+    await page.$eval('input[id=inputLastName]', 
+                (el, value) => el.value = value, lastName);
+
+    await page.click('button[id="btn-login"]');
+}
+
+async function journey() {
     // Go to website
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
@@ -30,25 +53,28 @@ async function navigate() {
         { waitUntil: 'networkidle2' });
 
     // Login
-    let firstName = names.getFirstName();
-    let lastName = names.getLastName();
-
-    await page.waitFor('input[id=inputFirstName]');
-    await page.$eval('input[name=inputFirstName]', 
-                el => el.value = firstName);
-
-    await page.waitFor('input[id=inputLastName]');
-    await page.$eval('input[name=inputLastName]', 
-                el => el.value = lastName);
-
-    await page.click('button[id="btn-login"]');
+    await login(page);
 
     // Click around the website
-    let navCount = minNavigation + Math.floor(Math.random() * maxNavigation);
+    let navCount = minActions + Math.floor(Math.random() * maxActions);
     for(let i = 0; i < navCount; i++){
         let id = navigations[Math.floor(Math.random() * navigations.length)]
+        await page.waitFor(`button[id="${id}"]`);
         await page.click(`button[id="${id}"]`);
         await timeout(1000, 10000);
+
+        // Chance to search
+        let percentChance = 10; 
+        let chance = Math.floor(Math.random() * 100);
+
+        // Search
+        if(chance < percentChance){
+            await page.waitFor('input[id="inputSearch"]');
+            await page.$eval('input[id="inputSearch"]', 
+                    (el, value) => el.value = value, search.getRandomTerm());
+            await page.click(`button[id="btn-search"]`);
+            await timeout(5000);
+        }
     }
 
     // Close browser
@@ -60,7 +86,7 @@ function startSimulation(){
     let tasks = []
     
     for(let i = 0; i < maxDudes; i++){
-        tasks.push(navigate());
+        tasks.push(journey());
     }
 
     Promise.all(tasks)
