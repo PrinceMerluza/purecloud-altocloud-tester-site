@@ -78,11 +78,18 @@
   <!-- 6 Sense Sim -->
   <script>
     window._6si.push(['enableCompanyDetails', true, (data) => {
-      for(const [key, val] of Object.entries(data)){
-        userData[key] = val;
+      let company = data.company;
+      for([k, v] of Object.entries(company)){
+        userData['company.' + k] = v;
+      }
+
+      let scores = data.scores;
+      for([product, stats] of Object.entries(scores)){
+        for([stat, val] of Object.entries(stats)){
+          userData['scores.' + product + '.' + stat] = val;
+        }
       }
       console.log(userData);
-
     }])
   </script>
 
