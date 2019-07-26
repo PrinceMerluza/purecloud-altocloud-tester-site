@@ -34,8 +34,9 @@ let _6si = {
 
     push(args){
         let cb = args[2];
-        console.log(args);
-        setTimeout(cb, 3000, this.visitorDataStub);
+        cb(this.visitorDataStub);
+        // console.log(args);
+        // setTimeout(cb, 1000, this.visitorDataStub);
     }
 }
 
