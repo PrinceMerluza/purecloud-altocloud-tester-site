@@ -30,37 +30,37 @@
 
   <!-- AC Configuration-->
   <script>
-    // let userData = {
-    //     addressStreet: '64472 Brown Street',
-    //     addressCity: 'Lindgrenmouth',
-    //     addressPostalCode: '50163-2735',
-    //     addressState: 'FL',
-    //     phoneNumber: '1-916-892-2045 x293',
-    //     phoneType: 'Cell',
-    //     customerId: '59606',
-    //     'testAttrib 2.withspace': 'test2'
-    //   };
+    let userData = {
+        addressStreet: '64472 Brown Street',
+        addressCity: 'Lindgrenmouth',
+        addressPostalCode: '50163-2735',
+        addressState: 'FL',
+        phoneNumber: '1-916-892-2045 x293',
+        phoneType: 'Cell',
+        customerId: '59606',
+        'testAttrib 2.withspace': 'test2'
+      };
 
-    //   window._genesys = {
-    //     widgets: {
-    //       webchat: {
-    //         transport: {
-    //           type: 'purecloud-v2-sockets',
-    //           dataURL: 'https://api.mypurecloud.com',
-    //           deploymentKey : '384b201d-5a83-478f-b461-43b2cd4163dd',
-    //           orgGuid : '03671e89-0883-48b0-8284-cd5260c38745',
-    //           interactionData: {
-    //             routing: {
-    //               targetType: 'QUEUE',
-    //               targetAddress: 'Prince Chat',
-    //               priority: 2
-    //             }
-    //           }
-    //         },
-    //         userData: userData
-    //       }
-    //     }
-    //   };
+      window._genesys = {
+        widgets: {
+          webchat: {
+            transport: {
+              type: 'purecloud-v2-sockets',
+              dataURL: 'https://api.mypurecloud.com',
+              deploymentKey : '384b201d-5a83-478f-b461-43b2cd4163dd',
+              orgGuid : '03671e89-0883-48b0-8284-cd5260c38745',
+              interactionData: {
+                routing: {
+                  targetType: 'QUEUE',
+                  targetAddress: 'Prince Chat',
+                  priority: 2
+                }
+              }
+            },
+            userData: userData
+          }
+        }
+      };
     let customPlugin = null;
     function setUpGenesysChat(data){
       let userData = {
@@ -129,7 +129,7 @@
 
   <!-- 6 Sense Sim -->
   <script>
-   window._6si.push(['enableCompanyDetails', true, setUpGenesysChat])
+   //window._6si.push(['enableCompanyDetails', true, setUpGenesysChat])
   </script>
 
   <title>PureCloud AltoCloud Quick Tester</title>
