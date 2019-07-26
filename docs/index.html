@@ -61,7 +61,7 @@
     //       }
     //     }
     //   };
-
+    let customPlugin = null;
     function setUpGenesysChat(data){
       let userData = {
         addressStreet: '64472 Brown Street',
@@ -108,21 +108,23 @@
           }
         }
       };
+
+      customPlugin = CXBus.registerPlugin('Custom');
+
+      customPlugin.subscribe('WebChatService.started', function (e) {
+        console.log('Chat started', e);
+      });
+
+      customPlugin.subscribe('WebChatService.ended', function (e) {
+        console.log('Chat ended', e);
+      });
     }
     
   </script>
 
   <!-- AC Plugin -->
   <script>
-    const customPlugin = CXBus.registerPlugin('Custom');
-
-    customPlugin.subscribe('WebChatService.started', function (e) {
-      console.log('Chat started', e);
-    });
-
-    customPlugin.subscribe('WebChatService.ended', function (e) {
-      console.log('Chat ended', e);
-    });
+    
   </script>
 
   <!-- 6 Sense Sim -->
