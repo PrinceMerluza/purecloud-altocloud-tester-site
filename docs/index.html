@@ -6,7 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
   <link rel="stylesheet" href="styles/style.css">
-  
+
+  <script src="scripts/controller.js"></script>
+  <script src="scripts/6sense.js"></script>
+
+
   <!-- AC PureCLoud Snippet-->
   <script>
     (function(a,t,c,l,o,u,d){a['_genesysJourneySdk']=o;a[o]=a[o]||function(){
@@ -27,6 +31,16 @@
 
   <!-- AC Configuration-->
   <script>
+    let userData = {
+      addressStreet: '64472 Brown Street',
+      addressCity: 'Lindgrenmouth',
+      addressPostalCode: '50163-2735',
+      addressState: 'FL',
+      phoneNumber: '1-916-892-2045 x293',
+      phoneType: 'Cell',
+      customerId: '59606'
+    };
+
     window._genesys = {
     widgets: {
       webchat: {
@@ -43,16 +57,7 @@
             }
           }
         },
-        userData: {
-          addressStreet: '64472 Brown Street',
-          addressCity: 'Lindgrenmouth',
-          addressPostalCode: '50163-2735',
-          addressState: 'FL',
-          phoneNumber: '1-916-892-2045 x293',
-          phoneType: 'Cell',
-          customerId: '59606',
-          otherAttribute: 'test1'
-        }
+        userData: userData
       }
     }
   };
@@ -69,6 +74,17 @@
     customPlugin.subscribe('WebChatService.ended', function (e) {
       console.log('Chat ended', e);
     });
+  </script>
+
+  <!-- 6 Sense Sim -->
+  <script>
+    window._6si.push(['enableCompanyDetails', true, (data) => {
+      for(const [key, val] of Object.entries(data)){
+        userData[key] = val;
+      }
+      console.log(userData);
+
+    }])
   </script>
 
   <title>PureCloud AltoCloud Quick Tester</title>
@@ -253,6 +269,6 @@
     </div>
   </section>
   
-  <script src="scripts/controller.js"></script>
+
 </body>
 </html>
