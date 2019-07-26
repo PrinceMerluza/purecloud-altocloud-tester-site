@@ -81,7 +81,8 @@ function logIn(userID, firstName, lastName){
         givenName: firstName,
         familyName: lastName,
         displayName: fullName,
-        randomAttribute: 'yep' // TODO:
+        companyName: 'Something Company',
+        otherAttribute: 'test2'
     });
 
     isLoggedIn = true;
