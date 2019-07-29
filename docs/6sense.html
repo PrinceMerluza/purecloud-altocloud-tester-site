@@ -69,11 +69,11 @@
     // Segments 
     let segments = data.segments.reduce((final, segment) => final + segment);
     console.log(segments);
-    ac('identify', 100, {
+    ac('identify', 12345, {
         givenName: 'test',
         familyName: 'testMan',
-        testAttrib: 'hello', 
-        segments: segments
+        // testAttrib: 'hello', 
+        // segments: segments
     });
 
     console.log(userData);
