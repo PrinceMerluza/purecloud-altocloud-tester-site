@@ -68,7 +68,9 @@
 
     // Segments 
     let segments = {};
-    ac('identify', 0, {
+    ac('identify', 100, {
+        givenName: 'test',
+        familyName: 'testMan',
         testAttrib: 'hello', 
         segments: data.segments.reduce((final, segment) => final + segment)
     });
