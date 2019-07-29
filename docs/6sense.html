@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+  <link rel="stylesheet" href="styles/style.css">
+
+  <script src="scripts/6sense.js"></script>
+
+
+  <!-- AC PureCLoud Snippet-->
+  <script>
+    (function(a,t,c,l,o,u,d){a['_genesysJourneySdk']=o;a[o]=a[o]||function(){
+    (a[o].q=a[o].q||[]).push(arguments)},a[o].l=1*new Date();u=t.createElement(c),
+    d=t.getElementsByTagName(c)[0];u.async=1;u.src=l;u.charset='utf-8';d.parentNode.insertBefore(u,d)
+    })(window, document, 'script', 'https://apps.mypurecloud.com/journey/sdk/js/web/v1/ac.js', 'ac');
+    ac('init', '03671e89-0883-48b0-8284-cd5260c38745', { region: 'use1' });
+    ac('pageview');
+  </script>
+
+  <script src="https://apps.mypurecloud.com/widgets/9.0/cxbus.min.js" 
+    onload="javascript:CXBus.configure({
+      debug:true,
+      pluginsPath: 'https://apps.mypurecloud.com/widgets/9.0/plugins/'
+    }); 
+    CXBus.loadPlugin('widgets-core');">
+  </script>
+
+  <!-- AC Configuration-->
+  <script>
+    let customPlugin = null;
+  </script>
+
+  <!-- 6 Sense Sim -->
+  <script>
+  window._6si.push(['enableCompanyDetails', true, (data) => {
+    // Data to be used by the Genesys Widget (WebChat)
+    let userData = {};
+
+    // Flatten company details and add to userData
+    for([k, v] of Object.entries(data.company)){
+      userData['company.' + k] = v;
+    }
+    // Record company details event to show details to AltoCloud
+    ac('record', '6Sense Company Details', data.company);
+
+    // Flatten product scores and add to userData
+    let scores = data.scores;
+    let i = 0;
+    for([product, stats] of Object.entries(scores)){
+      userData['scores.' + toString(i) + '.name'] = product;
+      for([stat, val] of Object.entries(stats)){
+        userData['scores.' + toString(i) + '.' + stat] = val;
+      }
+    }
+
+    // Record product scores event to show details to AltoCloud
+    let productScore = {};
+    for([product, stats] of Object.entries(scores)){
+      for([stat, val] of Object.entries(stats)){
+        productScores[stat] = val;
+      }
+      ac('record', '6Sense Product: ' + product, productScores);
+      productScores = {};
+    }
+
+    console.log(userData);
+
+    window._genesys = {
+      widgets: {
+        webchat: {
+          transport: {
+            type: 'purecloud-v2-sockets',
+            dataURL: 'https://api.mypurecloud.com',
+            deploymentKey : '384b201d-5a83-478f-b461-43b2cd4163dd',
+            orgGuid : '03671e89-0883-48b0-8284-cd5260c38745',
+            interactionData: {
+              routing: {
+                targetType: 'QUEUE',
+                targetAddress: 'Prince Chat',
+                priority: 2
+              }
+            }
+          },
+          userData: userData
+        }
+      }
+    };
+
+    customPlugin = CXBus.registerPlugin('Custom');
+
+    customPlugin.subscribe('WebChatService.started', function (e) {
+      console.log('Chat started', e);
+    });
+
+    customPlugin.subscribe('WebChatService.ended', function (e) {
+      console.log('Chat ended', e);
+    });
+   }])
+  </script>
+
+  <title>PureCloud AltoCloud 6Sense Test</title>
+</head>
+<body>
+  <section class="section" id="page-navigation">
+    <div class="container">
+      <h1 class="title">Simulate Page Visit</h1>
+      <h2 class="subtitle">
+        <strong>Status: </strong> <span id="page-status">Home</span> page
+      </h2>
+  
+      <div class="columns">
+        <div class="column">
+          <button 
+              id="btn-goto-home"
+              class="button is-large is-fullwidth" 
+              onclick="goToPage('home')">
+            Home
+          </button>
+        </div>
+        <div class="column">
+          <button 
+              id="btn-goto-about"
+              class="button is-large is-fullwidth" 
+              onclick="goToPage('about')">
+            About
+          </button>
+        </div>
+        <div class="column">
+          <button 
+              id="btn-goto-contactUs"
+              class="button is-large is-fullwidth" 
+              onclick="goToPage('contactUs')">
+            Contact Us
+          </button>
+        </div>
+        <div class="column">
+          <button 
+              id="btn-goto-shop"
+              class="button is-large is-fullwidth" 
+              onclick="goToPage('shop')">
+            Shop
+          </button>
+        </div>
+        <div class="column">
+          <button class="button is-large is-fullwidth">
+            Cart
+          </button>
+        </div>
+        <div class="column">
+          <button 
+              id="btn-goto-faqs"
+              class="button is-large is-fullwidth" 
+              onclick="goToPage('faqs')">
+            FAQs
+          </button>
+        </div>
+        <div class="column">
+          <button 
+              id="btn-goto-locations"
+              class="button is-large is-fullwidth" 
+              onclick="goToPage('locations')">
+            Store Location
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section" id="account-related">
+    <div class="container">
+      <h1 class="title">Acount Related</h1>
+      <h2 class="subtitle">
+        <strong>Status: </strong> <span id="account-status">No user</span>
+      </h2>
+      
+      <!-- Credentials Form -->
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">UserId</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <p class="control">
+              <input id="inputUserID" class="input" type="text" placeholder="">
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">First Name</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <p class="control">
+              <input id="inputFirstName" class="input" type="text" placeholder="Thanos">
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Last Name</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <p class="control">
+              <input id="inputLastName" class="input" type="text" placeholder="McSnappy">
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="columns">
+        <div class="column">
+          <button 
+              id="btn-login"
+              class="button is-large is-fullwidth" 
+              onclick="logInPress()">
+            Log In
+          </button>
+        </div>
+        <div class="column">
+            <button 
+                id="btn-logout"
+                class="button is-large is-fullwidth is-danger" 
+                onclick="logOut()">
+              Log Out
+            </button>
+          </div>
+        <div class="column">
+          <button class="button is-large is-fullwidth" onclick="">
+            Sign Up
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section" id="shop-related">
+    <div class="container">
+      <h1 class="title">Search</h1>
+      <h2 class="subtitle">
+        <span>Simulate Searching</span>
+      </h2>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Search Term</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <p class="control">
+              <input id="inputSearch" class="input" type="text" placeholder="love">
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <button 
+            id="btn-search"
+            class="button is-large is-fullwidth" 
+            onclick="search()">
+          Search!
+        </button>
+      </div>
+    </div>
+  </section>
+  <section class="section" id="chat-related">
+    <div class="container">
+      <h1 class="title">Chat</h1>
+      <h2 class="subtitle">
+        <span>Manually open a chat</span>
+      </h2>
+      <div class="container">
+        <button 
+            id="btn-webchat"
+            class="button is-large is-fullwidth"
+            onclick="customPlugin.command('WebChat.open', getAdvancedConfig());">
+          Chat!
+        </button>
+      </div>
+    </div>
+  </section>
+  
+  <script src="scripts/controller.js"></script>
+</body>
+</html>
