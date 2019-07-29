@@ -12,8 +12,8 @@ let _6si = {
             "region": "Northern America"
         },
         "segments": [
-            "Comapny Visted last 30d",
-            "Companies researching COmpetitors",
+            "Company Visited last 30d",
+            "Companies researching Competitors",
             "Companies using SF"
         ],
         "scores": {
