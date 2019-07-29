@@ -33,21 +33,18 @@
     let customPlugin = null;
   </script>
 
-  <!-- AC Plugin -->
-  <script>
-    
-  </script>
-
   <!-- 6 Sense Sim -->
   <script>
   window._6si.push(['enableCompanyDetails', true, (data) => {
+    // Data to be used by the Genesys Widget (WebChat)
     let userData = {};
 
     // Flatten company details and add to userData
-    let company = data.company;
-    for([k, v] of Object.entries(company)){
+    for([k, v] of Object.entries(data.company)){
       userData['company.' + k] = v;
     }
+    // Record company details event to show details to AltoCloud
+    ac('record', '6Sense Company Details', data.company);
 
     // Flatten product scores and add to userData
     let scores = data.scores;
@@ -58,6 +55,17 @@
         userData['scores.' + toString(i) + '.' + stat] = val;
       }
     }
+
+    // Record product scores event to show details to AltoCloud
+    let productScore = {};
+    for([product, stats] of Object.entries(scores)){
+      for([stat, val] of Object.entries(stats)){
+        productScores[stat] = val;
+      }
+      ac('record', '6Sense Product: ' + product, productScores);
+      productScores = {};
+    }
+
     console.log(userData);
 
     window._genesys = {
@@ -93,7 +101,7 @@
    }])
   </script>
 
-  <title>PureCloud AltoCloud Quick Tester</title>
+  <title>PureCloud AltoCloud 6Sense Test</title>
 </head>
 <body>
   <section class="section" id="page-navigation">
