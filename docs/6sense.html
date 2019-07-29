@@ -18,6 +18,11 @@
     })(window, document, 'script', 'https://apps.mypurecloud.com/journey/sdk/js/web/v1/ac.js', 'ac');
     ac('init', '03671e89-0883-48b0-8284-cd5260c38745', { region: 'use1' });
     ac('pageview');
+    ac('identify', 100, {
+        firstName: 'test',
+        lastName: 'testman',
+        tester: 'shocks'
+    });
   </script>
 
   <script src="https://apps.mypurecloud.com/widgets/9.0/cxbus.min.js" 
@@ -44,7 +49,7 @@
       userData['company.' + k] = v;
     }
     // Record company details event to show details to AltoCloud
-    ac('record', '6Sense Company Details', data.company);
+    ac('record', '6s_company_details', data.company);
 
     // Flatten product scores and add to userData
     let scores = data.scores;
@@ -62,7 +67,7 @@
       for([stat, val] of Object.entries(stats)){
         productScores[stat] = val;
       }
-      ac('record', '6Sense Product: ' + product, productScores);
+      ac('record', '6s_product_' + product, productScores);
       productScores = {};
     }
 
