@@ -69,6 +69,7 @@
     // Segments 
     let segments = {};
     ac('identify', 0, {
+        testAttrib: 'hello', 
         segments: data.segments.reduce((final, segment) => final + segment)
     });
 
