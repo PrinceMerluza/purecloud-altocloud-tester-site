@@ -57,7 +57,7 @@
     }
 
     // Record product scores event to show details to AltoCloud
-    let productScore = {};
+    let productScores = {};
     for([product, stats] of Object.entries(scores)){
       for([stat, val] of Object.entries(stats)){
         productScores[stat] = val;
