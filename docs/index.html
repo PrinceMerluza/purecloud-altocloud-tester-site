@@ -30,88 +30,7 @@
 
   <!-- AC Configuration-->
   <script>
-    // let userData = {
-    //     addressStreet: '64472 Brown Street',
-    //     addressCity: 'Lindgrenmouth',
-    //     addressPostalCode: '50163-2735',
-    //     addressState: 'FL',
-    //     phoneNumber: '1-916-892-2045 x293',
-    //     phoneType: 'Cell',
-    //     customerId: '59606',
-    //     'testAttrib 2.withspace': 'test2'
-    //   };
-
-    //   window._genesys = {
-    //     widgets: {
-    //       webchat: {
-    //         transport: {
-    //           type: 'purecloud-v2-sockets',
-    //           dataURL: 'https://api.mypurecloud.com',
-    //           deploymentKey : '384b201d-5a83-478f-b461-43b2cd4163dd',
-    //           orgGuid : '03671e89-0883-48b0-8284-cd5260c38745',
-    //           interactionData: {
-    //             routing: {
-    //               targetType: 'QUEUE',
-    //               targetAddress: 'Prince Chat',
-    //               priority: 2
-    //             }
-    //           }
-    //         },
-    //         userData: userData
-    //       }
-    //     }
-    //   };
     let customPlugin = null;
-    function setUpGenesysChat(data){
-      let userData = {
-        addressStreet: '64472 Brown Street',
-        addressCity: 'Lindgrenmouth',
-        addressPostalCode: '50163-2735',
-        addressState: 'FL',
-        phoneNumber: '1-916-892-2045 x293',
-        phoneType: 'Cell',
-        customerId: '59606',
-        testAttrib2: 'test2'
-      };
-
-      let company = data.company;
-      for([k, v] of Object.entries(company)){
-        userData['company.' + k] = v;
-      }
-
-      let scores = data.scores;
-      for([product, stats] of Object.entries(scores)){
-        for([stat, val] of Object.entries(stats)){
-          userData['scores.' + product + '.' + stat] = val;
-        }
-      }
-      userData.testAttrib = 'test1';
-      console.log(userData);
-
-      window._genesys = {
-        widgets: {
-          webchat: {
-            transport: {
-              type: 'purecloud-v2-sockets',
-              dataURL: 'https://api.mypurecloud.com',
-              deploymentKey : '384b201d-5a83-478f-b461-43b2cd4163dd',
-              orgGuid : '03671e89-0883-48b0-8284-cd5260c38745',
-              interactionData: {
-                routing: {
-                  targetType: 'QUEUE',
-                  targetAddress: 'Prince Chat',
-                  priority: 2
-                }
-              }
-            },
-            userData: userData
-          }
-        }
-      };
-
-      
-    }
-    
   </script>
 
   <!-- AC Plugin -->
@@ -121,54 +40,48 @@
 
   <!-- 6 Sense Sim -->
   <script>
-   window._6si.push(['enableCompanyDetails', true, (data) => {
-    let userData = {
-        addressStreet: '64472 Brown Street',
-        addressCity: 'Lindgrenmouth',
-        addressPostalCode: '50163-2735',
-        addressState: 'FL',
-        phoneNumber: '1-916-892-2045 x293',
-        phoneType: 'Cell',
-        customerId: '59606',
-        testAttrib2: 'test2'
-      };
+  window._6si.push(['enableCompanyDetails', true, (data) => {
+    let userData = {};
 
-      let company = data.company;
-      for([k, v] of Object.entries(company)){
-        userData['company.' + k] = v;
+    // Flatten company details and add to userData
+    let company = data.company;
+    for([k, v] of Object.entries(company)){
+      userData['company.' + k] = v;
+    }
+
+    // Flatten product scores and add to userData
+    let scores = data.scores;
+    let i = 0;
+    for([product, stats] of Object.entries(scores)){
+      userData['scores.' + toString(i) + '.name'] = product;
+      for([stat, val] of Object.entries(stats)){
+        userData['scores.' + toString(i) + '.' + stat] = val;
       }
+    }
+    console.log(userData);
 
-      let scores = data.scores;
-      for([product, stats] of Object.entries(scores)){
-        for([stat, val] of Object.entries(stats)){
-          userData['scores.' + product + '.' + stat] = val;
-        }
-      }
-      userData.testAttrib = 'test1';
-      console.log(userData);
-
-      window._genesys = {
-        widgets: {
-          webchat: {
-            transport: {
-              type: 'purecloud-v2-sockets',
-              dataURL: 'https://api.mypurecloud.com',
-              deploymentKey : '384b201d-5a83-478f-b461-43b2cd4163dd',
-              orgGuid : '03671e89-0883-48b0-8284-cd5260c38745',
-              interactionData: {
-                routing: {
-                  targetType: 'QUEUE',
-                  targetAddress: 'Prince Chat',
-                  priority: 2
-                }
+    window._genesys = {
+      widgets: {
+        webchat: {
+          transport: {
+            type: 'purecloud-v2-sockets',
+            dataURL: 'https://api.mypurecloud.com',
+            deploymentKey : '384b201d-5a83-478f-b461-43b2cd4163dd',
+            orgGuid : '03671e89-0883-48b0-8284-cd5260c38745',
+            interactionData: {
+              routing: {
+                targetType: 'QUEUE',
+                targetAddress: 'Prince Chat',
+                priority: 2
               }
-            },
-            userData: userData
-          }
+            }
+          },
+          userData: userData
         }
-      };
+      }
+    };
 
-      customPlugin = CXBus.registerPlugin('Custom');
+    customPlugin = CXBus.registerPlugin('Custom');
 
     customPlugin.subscribe('WebChatService.started', function (e) {
       console.log('Chat started', e);
