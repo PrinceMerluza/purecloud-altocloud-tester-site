@@ -18,6 +18,12 @@
     })(window, document, 'script', 'https://apps.mypurecloud.com/journey/sdk/js/web/v1/ac.js', 'ac');
     ac('init', '03671e89-0883-48b0-8284-cd5260c38745', { region: 'use1' });
     ac('pageview');
+    ac('identify', 1000, {
+        givenName: 'test',
+        familyName: 'testMan',
+        displayName: 'testinger testMan',
+        testAttrib: 'hello', 
+    });
   </script>
 
   <script src="https://apps.mypurecloud.com/widgets/9.0/cxbus.min.js" 
@@ -69,13 +75,13 @@
     // Segments 
     let segments = data.segments.reduce((final, segment) => final + segment);
     console.log(segments);
-    ac('identify', 12345, {
-        givenName: 'test',
-        familyName: 'testMan',
-        displayName: 'testinger testMan',
-        // testAttrib: 'hello', 
-        // segments: segments
-    });
+    // ac('identify', 12345, {
+    //     givenName: 'test',
+    //     familyName: 'testMan',
+    //     displayName: 'testinger testMan',
+    //     // testAttrib: 'hello', 
+    //     // segments: segments
+    // });
 
     console.log(userData);
 
