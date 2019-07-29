@@ -19,10 +19,15 @@
     ac('init', '03671e89-0883-48b0-8284-cd5260c38745', { region: 'use1' });
     ac('pageview');
     ac('identify', 100, {
-        firstName: 'test',
-        lastName: 'testman',
+        givenName: 'test',
+        familyName: 'testman',
         tester: 'shocks'
     });
+    setTimeout(() => {
+        ac('api.customer.get', (cust) => {
+            console.log(cust);
+        })
+    }, 1000);
   </script>
 
   <script src="https://apps.mypurecloud.com/widgets/9.0/cxbus.min.js" 
