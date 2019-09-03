@@ -13,8 +13,8 @@ const navigations =  [
 ]
 const maxActions = 10;
 const minActions = 10;
-const maxDudes = 1;
-const proactiveChatRate = 1;
+const maxDudes = 10; // Practical max of 15
+const proactiveChatRate = 0;
 const searchRate = 0.1
 
 const enableChat = true;
